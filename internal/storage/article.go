@@ -63,7 +63,7 @@ func (s *ArticlePostgresStorage) AllNotPosted(ctx context.Context, since time.Ti
 		`SELECT * FROM articles 
 		WHERE posted_at IS NULL 
 		AND published_at >= $1::timestamp 
-		ORDED BY published_at DESC LIMIT $2`,
+		ORDER BY published_at DESC LIMIT $2`,
 		since.UTC().Format(time.RFC3339),
 		limit,
 	); err != nil {
