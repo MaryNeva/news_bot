@@ -35,7 +35,7 @@ func (s *ArticlePostgresStorage) Storage(ctx context.Context, article model.Arti
 		ctx,
 		`INSERT INTO articles (source_id, title, link, summary, published_At) 
 		VALUES ($1, $2, $3, $4, $5)
-		ON CONFLICT DO NOTHING`,
+		ON CONFLICT DO NOTHING;`,
 		article.SourceID,
 		article.Title,
 		article.Link,
@@ -63,7 +63,7 @@ func (s *ArticlePostgresStorage) AllNotPosted(ctx context.Context, since time.Ti
 		`SELECT * FROM articles 
 		WHERE posted_at IS NULL 
 		AND published_at >= $1::timestamp 
-		ORDER BY published_at DESC LIMIT $2`,
+		ORDER BY published_at DESC LIMIT $2;`,
 		since.UTC().Format(time.RFC3339),
 		limit,
 	); err != nil {
@@ -92,7 +92,7 @@ func (s *ArticlePostgresStorage) MarkPosted(ctx context.Context, id int64) error
 
 	if _, err := conn.ExecContext(
 		ctx,
-		`UPDATE articles SET posted_at = $1::timestamp WHERE id = $2`,
+		`UPDATE articles SET posted_at = $1::timestamp WHERE id = $2;`,
 		time.Now().UTC().Format(time.RFC3339),
 		id,
 	); err != nil {
