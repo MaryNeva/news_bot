@@ -17,12 +17,12 @@ type RSSSource struct {
 
 // ID implements fetcher.Source.
 func (s RSSSource) ID() int64 {
-	panic("unimplemented")
+	return s.SourceID
 }
 
 // Name implements fetcher.Source.
 func (s RSSSource) Name() string {
-	panic("unimplemented")
+	return s.SourceName
 }
 
 func NewRSSSourceFromModel(m model.Source) RSSSource {
